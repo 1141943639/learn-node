@@ -32,8 +32,10 @@ class UserController {
   }
 
   async login(ctx, next) {
+    const {user_name} = ctx.request.body || {}
+
     ctx.body = {
-      message: '登陆成功'
+      message: ['欢迎回来', user_name].join(', ')
     }
   }
 }

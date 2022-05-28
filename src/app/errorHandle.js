@@ -1,26 +1,22 @@
-const isEmpty = require('lodash/isEmpty')
+module.exports = async (ctx, next) => {
+  try {
+    await next()
+  } catch(err) {
+    const {
+      code = '99901',
+      message,
+      status = 500,
+      result = ''
+    } = err
 
-module.exports = async (error = {}, ctx = {}) => {
-  if(
-    [
-      error,
-      ctx
-    ].some(val => isEmpty(val))
-  ) {
-    throw new Error('错误处理缺少参数')
+
+    ctx.status = status || 500
+    ctx.body = {
+      code,
+      message,
+      result
+    }
+    
+    console.error(err)
   }
-
-  let status = 500
-
-  switch(error?.code) {
-    case '100001':
-      status = 400
-      break
-    case '100002':
-      status = 409
-      break
-  }
-
-  ctx.status = status
-  ctx.body = error
 }
