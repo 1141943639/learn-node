@@ -13,7 +13,7 @@ module.exports = async (ctx, next) => {
     ctx.status = status || 500
     ctx.body = {
       code,
-      message,
+      message: message || err,
       result
     }
     
