@@ -45,8 +45,8 @@ class UserService {
     try {
       const res = Boolean(
         (
-          User.update(data, {
-            where: {
+          await User.update(data, {
+            where: { 
               id
             }
           })
